@@ -15,7 +15,7 @@ bot.on("message", msg => {
   const command = args.shift().toLowerCase();
 
   if (command == "ping") {
-    msg.channel.sendMessage("pong!");
+    msg.channel.send("pong!");
   }
 
   // else if (msg.content.startsWith(config.prefix + "getLogs ")) {
@@ -24,11 +24,32 @@ bot.on("message", msg => {
   //   let messages = user.getLogs(3, be)
   // }
 
+  if (command == "help") {
+    msg.channel.send("!change @target newName");
+  }
 
   if (command == "change") {
+    if (args === undefined || args.length == 0) {
+      msg.channel.send("you forgot an user you goon");
+      return;
+    } else if (args.length < 2) {
+      msg.channel.send("you need some !help");
+      return;
+    }
     let user = msg.mentions.users.first();
     let newName = args[1];
     msg.guild.member(user).setNickname(newName);
+  }
+
+  if (command == "getlog") {
+    let user = msg.mentions.users.first();
+    bot.getChannelLogs(msg.channel, 3, {}, function(err, logs) {
+      if (!err) {
+          msg.channel.send(logs)
+      } else {
+        console.log("Error getting logs: ", err)
+      }
+    });
   }
 });
 
