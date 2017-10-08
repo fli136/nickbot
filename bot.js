@@ -37,7 +37,7 @@ bot.on("message", msg => {
       return;
     }
     let user = msg.mentions.users.first();
-    let newName = args[1];
+    let newName = args.slice(1).join(" ");
     msg.guild.member(user).setNickname(newName);
   }
 
