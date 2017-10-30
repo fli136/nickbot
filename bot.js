@@ -29,7 +29,7 @@ bot.on("message", msg => {
   }
 
   if (command == "change") {
-    if (args === undefined || args.length == 0) {
+    if (args === undefined || args.length == 0 || msg.mentions.users != null || msg.mentions.user.length < 1) {
       msg.channel.send("you forgot an user you goon");
       return;
     } else if (args.length < 2) {
@@ -41,16 +41,15 @@ bot.on("message", msg => {
     msg.guild.member(user).setNickname(newName);
   }
 
-  if (command == "getlog") {
-    let user = msg.mentions.users.first();
-    bot.getChannelLogs(msg.channel, 3, {}, function(err, logs) {
-      if (!err) {
-          msg.channel.send(logs)
-      } else {
-        console.log("Error getting logs: ", err)
-      }
-    });
-  }
+  // if (command == "getlog") {
+  //   bot.getChannelLogs(msg.channel, 3, {}, function(err, logs) {
+  //     if (!err) {
+  //         msg.channel.send("got logs");
+  //     } else {
+  //       console.log("Error getting logs: ", err);
+  //     }
+  //   });
+  // }
 });
 
 bot.on('ready', () => {
